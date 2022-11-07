@@ -3,23 +3,34 @@ import Head from "next/head";
 import { authServer } from "../lib/session";
 import type { TIdTokenResult } from "../lib/authContext";
 import React, { ReactNode } from "react";
+import { EmailAuthCredential } from "firebase/auth";
+
+interface AuthUser {
+
+    provider_id?: string,
+    user_id?: string,
+    email?: string,
+    uid?: string
+  }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const user = await authServer(ctx);
+  const authUser = await authServer(ctx);
 
-  return { props: { user } };
+  return { props: { authUser } };
 };
 
 const Home: NextPage = ({
   user,
+  authUser,
 }: {
   user?: TIdTokenResult;
+  authUser?: AuthUser;
   children?: ReactNode;
 }) => {
-  if (!user) return <h1>U need to login</h1>;
-  if (user && user.provider_id ==='anonymous') return(
+  if (!user && !authUser ) return <h1>U need to login</h1>;
+  if (user && authUser?.provider_id ==='anonymous') return(
     <main>
-      <h1>Guest: {user.user_id}</h1>
+      <h1>Guest: {authUser?.user_id}</h1>
       <p>No token as it s a cookie based auth</p>
       Private with SSR
 
@@ -34,7 +45,7 @@ console.log(user)
       </Head>
 
       <main>
-        <h1>Email: {user?.email}</h1>
+        <h1>Email: {authUser?.email}</h1>
         <p>No token as it s a cookie based auth</p>
         Private with SSR
       </main>
