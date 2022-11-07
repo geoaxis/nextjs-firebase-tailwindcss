@@ -7,7 +7,16 @@ const Home: NextPage = () => {
   const { user, loading } = useAuth();
 
   if (loading) return <h1>Loading...</h1>;
-  if (!user) return <h1>U need to login</h1>;
+  if (!user) return <h1>You need to login to see this page</h1>;
+
+  console.log(user)
+  if (user && user.signInProvider ==='anonymous') return(
+  <main>
+      <h1>Guest: {user.claims.user_id}</h1>
+      <p>token: {user.token}</p>
+      Private 
+
+    </main>);
 
   return (
     <>
@@ -17,7 +26,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1>Email : {user?.claims.email}</h1>
+        <h1>Email: {user?.claims.email}</h1>
+        <p>token: {user.token}</p>
         Private
       </main>
     </>

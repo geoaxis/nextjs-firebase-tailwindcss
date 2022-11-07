@@ -13,7 +13,7 @@ export default function Header(props: any) {
       </div>
 
       <div className="m-auto space-x-2">
-        {!user && !loading ? (
+        {(!user && !loading ) ? (
           <>
             <Link passHref href="/signup">
               <button className="m-auto"> Signup</button>
@@ -24,7 +24,7 @@ export default function Header(props: any) {
             </Link>
           </>
         ) : null}
-        {user ? (
+        {user && user.signInProvider !='anonymous'? (
           <>
             <Link href="/privatessr">
               <button> PrivateSSR</button>
@@ -35,6 +35,28 @@ export default function Header(props: any) {
             </Link>
 
             <button onClick={signOut}> Signout</button>
+          </>
+        ) : null}
+
+        {user && user.signInProvider ==='anonymous'? (
+          <>
+
+
+            <Link href="/privatessr">
+              <button> PrivateSSR</button>
+            </Link>
+
+            <Link href="/private">
+              <button> Private</button>
+            </Link>
+            
+            <Link passHref href="/signup">
+              <button className="m-auto"> Signup</button>
+            </Link>
+
+            <Link passHref href="/signin">
+              <button className="m-auto"> Signin</button>
+            </Link>
           </>
         ) : null}
       </div>

@@ -17,6 +17,15 @@ const Home: NextPage = ({
   children?: ReactNode;
 }) => {
   if (!user) return <h1>U need to login</h1>;
+  if (user && user.provider_id ==='anonymous') return(
+    <main>
+      <h1>Guest: {user.user_id}</h1>
+      <p>No token as it s a cookie based auth</p>
+      Private with SSR
+
+    </main>);
+
+console.log(user)
 
   return (
     <>
@@ -25,7 +34,8 @@ const Home: NextPage = ({
       </Head>
 
       <main>
-        <h1>Email : {user.claims.email}</h1>
+        <h1>Email: {user?.email}</h1>
+        <p>No token as it s a cookie based auth</p>
         Private with SSR
       </main>
     </>

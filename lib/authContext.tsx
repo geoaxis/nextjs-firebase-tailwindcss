@@ -3,6 +3,8 @@ import { getAuth, onAuthStateChanged, signOut as signout } from "firebase/auth";
 import { setCookie, destroyCookie } from "nookies";
 
 export type TIdTokenResult = {
+  provider_id : string,
+  email: string,
   token: string;
   expirationTime: string;
   authTime: string;
