@@ -27,8 +27,9 @@ const Home: NextPage = ({
   authUser?: AuthUser;
   children?: ReactNode;
 }) => {
+  console.log(authUser);
   if (!user && !authUser ) return <h1>U need to login</h1>;
-  if (user && authUser?.provider_id ==='anonymous') return(
+  if (!user && authUser?.provider_id ==='anonymous') return(
     <main>
       <h1>Guest: {authUser?.user_id}</h1>
       <p>No token as it s a cookie based auth</p>
@@ -36,7 +37,6 @@ const Home: NextPage = ({
 
     </main>);
 
-console.log(user)
 
   return (
     <>
